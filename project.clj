@@ -10,6 +10,7 @@
                  [org.clojure/clojurescript "1.9.229"]
                  [org.clojure/core.async "0.2.391"
                   :exclusions [org.clojure/tools.reader]]
+                 [devcards "0.2.2"]
                  [reagent "0.6.0"]]
 
   :plugins [[lein-figwheel "0.5.8"]
@@ -40,6 +41,15 @@
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
+                           :preloads [devtools.preload]}}
+               {:id "devcards"
+                :source-paths ["src"]
+                :figwheel {:devcards true }
+                :compiler {:main    "matchit.devcards"
+                           :asset-path "js/compiled/devcards_out"
+                           :output-to  "resources/public/js/compiled/matchit_devcards.js"
+                           :output-dir "resources/public/js/compiled/devcards_out"
+                           :source-map-timestamp true
                            :preloads [devtools.preload]}}
                ;; This next build is an compressed minified build for
                ;; production. You can build this with:
