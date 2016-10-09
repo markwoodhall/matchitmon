@@ -1,29 +1,41 @@
 (ns ^:figwheel-always matchit.devcards
-  (:require [matchit.core :refer [board matchitmon num-rows reveal hide hidden visible view-box]]
+  (:require [matchit.core :refer [board matchitmon reveal hide hidden visible view-box]]
             [devcards.core :refer-macros [deftest]]
-            [cljs.test :refer-macros [is]])
+            [cljs.test :refer-macros [is]]
+            [reagent.core :refer [atom]])
   (:require-macros
     [devcards.core :refer [defcard defcard-rg]]))
 
 (enable-console-print!)
 
-(defcard board-with-4-rows
-  "A board is sized based on the number of template tiles supported and the number of rows requested.
-  Tiles are shuffled for each board requested to create an element of uniqueness for each board."
-  (fn [] (board 4)))
-
-(defcard-rg hidden-tile
-  "A hidden tile is a solid block of colour."
-  (fn [] (into (view-box 400 200 2 1) [(hidden {:x 0 :y 0 :id 1 :disable-click? true})])))
-
-(defcard-rg visible-tile
-  "A visible tile has the background image specified, in this case, a pokemon."
-  (fn [] (into (view-box 400 200 2 1) [(visible {:x 0 :y 0 :id 1 :image "img/pikachu.png"})])))
-
+(defonce default-board (atom {:board (board 4) :height 600 :width 900}))
 (defcard-rg default-matchitmon
   "A default matchitmon board is 6x4, there are 4 instances of each unique pokemon tile, if all 4 are revealed
   at the same time then they will stay revealed, otherwise after 6 seconds each one will be hidden again."
-  (fn [] (matchitmon)))
+  [matchitmon default-board]
+  default-board
+  {:history true})
+
+(defonce default-board-tile-revealed (atom {:board (reveal 1 (board 4)) :height 600 :width 900}))
+(defcard-rg default-matchitmon-tile-revealed
+  "A default mathictmon board with a tile revealed."
+  [matchitmon default-board-tile-revealed]
+  default-board-tile-revealed
+  {:history true})
+
+(defonce default-board-all-tiles-revealed (atom {:board (reveal (board 4)) :height 600 :width 900}))
+(defcard-rg default-matchitmon-all-tiles-revealed
+  "A default mathictmon board with all tiles revealed."
+  [matchitmon default-board-all-tiles-revealed]
+  default-board-all-tiles-revealed
+  {:history true})
+
+(defonce large-board (atom {:board (board (* 10 2)) :height 600 :width 900}))
+(defcard-rg large-matchitmon
+  "A large matchitmon board"
+  [matchitmon large-board]
+  large-board
+  {:history true})
 
 (deftest revealing-a-tile
   (let [new-board (board 2)

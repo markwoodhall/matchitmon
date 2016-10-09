@@ -28,16 +28,17 @@
          (flatten)
          (map-indexed ->id))))
 
-(defonce num-rows 4)
-(defonce app-state (atom {:board (board num-rows)}))
+(defonce app-state (atom {:board (board 4) :width 900 :height 600}))
 
 (defn reveal
-  [id board]
-  (let [by-id #(= id (:id %))
-        tile (first (filter by-id board))
-        removed (remove by-id board)]
-    (-> (assoc tile :revealed? true)
-        (cons removed))))
+  ([board]
+   (map #(assoc % :revealed? true) board))
+  ([id board]
+   (let [by-id #(= id (:id %))
+         tile (first (filter by-id board))
+         removed (remove by-id board)]
+     (-> (assoc tile :revealed? true)
+         (cons removed)))))
 
 (defn hide
   [id board]
@@ -51,7 +52,7 @@
         (cons removed))))
 
 (defn hidden
-  [{:keys [x y id disable-click?]}]
+  [app {:keys [x y id disable-click?]}]
   [:rect
    {:fill "grey"
     :width 0.9
@@ -63,8 +64,8 @@
     (if (not disable-click?)
       (fn hidden-click
         [e]
-        (swap! app-state update-in [:board] (partial reveal id))
-        (js/setInterval #(swap! app-state update-in [:board] (partial hide id)) 6000))
+        (swap! app update-in [:board] (partial reveal id))
+        (js/setInterval #(swap! app update-in [:board] (partial hide id)) 6000))
       #())}])
 
 (defn visible
@@ -85,16 +86,16 @@
     :height height}])
 
 (defn matchitmon
-  []
-  (into
-    (view-box 900 600 (inc (:x (apply max-key :x (:board @app-state)))) num-rows)
-    (for [tile (:board @app-state)]
-      (if (:revealed? tile)
-        (visible tile)
-        (hidden tile)))))
+  [app]
+  (let [{:keys [height width board]} @app]
+    (into
+      (view-box width height (inc (:x (apply max-key :x board))) (inc (:y (apply max-key :y board))))
+      (for [tile board]
+        (if (:revealed? tile)
+          (visible tile)
+          (hidden app tile))))))
 
-(reagent/render-component [matchitmon]
+(reagent/render-component [matchitmon app-state]
                           (. js/document (getElementById "app")))
 
-(defn on-js-reload []
-  (prn (:board @app-state)))
+(defn on-js-reload [])
