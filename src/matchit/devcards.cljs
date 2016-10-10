@@ -1,7 +1,7 @@
 (ns ^:figwheel-always matchit.devcards
   (:require [matchit.core :refer [board matchitmon reveal hide hidden visible view-box]]
             [devcards.core :refer-macros [deftest]]
-            [cljs.test :refer-macros [is]]
+            [cljs.test :refer-macros [testing is]]
             [reagent.core :refer [atom]])
   (:require-macros
     [devcards.core :refer [defcard defcard-rg]]))
@@ -37,7 +37,20 @@
   large-board
   {:history true})
 
+(deftest creating-a-board
+  "Creating boards."
+  (testing
+    "A new board should have no revealed tiles."
+    (is (= 0 (count (filter #(:revealed? %) (board 4))))))
+  (testing
+    "A new board with 1 row should result in a unique board 80% of the time."
+    (is (<= 80 (count (set (repeatedly 100 #(board 1)))))))
+  (testing
+    "A new board with 2 rows should result in a unique board 99% of the time."
+    (is (<= 99 (count (set (repeatedly 100 #(board 2))))))))
+
 (deftest revealing-a-tile
+  "Revealing a tile should set `:revealed? true`."
   (let [new-board (board 2)
         reveal-tile-id 1
         board-with-reveal (reveal reveal-tile-id new-board)
@@ -45,6 +58,7 @@
     (is (:revealed? tile))))
 
 (deftest hiding-a-tile
+  "Hiding a tile should set `:revealed? false`."
   (let [new-board (board 2)
         reveal-tile-id 1
         board-with-reveal (reveal reveal-tile-id new-board)
