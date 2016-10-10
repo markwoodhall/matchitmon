@@ -12,23 +12,23 @@ goog.require('devtools.formatters.markup');
  *   via disclosure triangle. The header can be styled and you can optionally specify preferred wrapping tag (advanced).
  */
 devtools.toolbox.envelope = (function devtools$toolbox$envelope(var_args){
-var args77118 = [];
-var len__48622__auto___77124 = arguments.length;
-var i__48623__auto___77125 = (0);
+var args41321 = [];
+var len__25865__auto___41327 = arguments.length;
+var i__25866__auto___41328 = (0);
 while(true){
-if((i__48623__auto___77125 < len__48622__auto___77124)){
-args77118.push((arguments[i__48623__auto___77125]));
+if((i__25866__auto___41328 < len__25865__auto___41327)){
+args41321.push((arguments[i__25866__auto___41328]));
 
-var G__77126 = (i__48623__auto___77125 + (1));
-i__48623__auto___77125 = G__77126;
+var G__41329 = (i__25866__auto___41328 + (1));
+i__25866__auto___41328 = G__41329;
 continue;
 } else {
 }
 break;
 }
 
-var G__77120 = args77118.length;
-switch (G__77120) {
+var G__41323 = args41321.length;
+switch (G__41323) {
 case 1:
 return devtools.toolbox.envelope.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -46,7 +46,7 @@ return devtools.toolbox.envelope.cljs$core$IFn$_invoke$arity$4((arguments[(0)]),
 
 break;
 default:
-throw (new Error([cljs.core.str("Invalid arity: "),cljs.core.str(args77118.length)].join('')));
+throw (new Error([cljs.core.str("Invalid arity: "),cljs.core.str(args41321.length)].join('')));
 
 }
 });
@@ -64,7 +64,7 @@ return devtools.toolbox.envelope.call(null,obj,header,style,new cljs.core.Keywor
 });
 
 devtools.toolbox.envelope.cljs$core$IFn$_invoke$arity$4 = (function (obj,header,style,tag){
-if(typeof devtools.toolbox.t_devtools$toolbox77121 !== 'undefined'){
+if(typeof devtools.toolbox.t_devtools$toolbox41324 !== 'undefined'){
 } else {
 
 /**
@@ -73,66 +73,66 @@ if(typeof devtools.toolbox.t_devtools$toolbox77121 !== 'undefined'){
  * @implements {cljs.core.IMeta}
  * @implements {cljs.core.IWithMeta}
 */
-devtools.toolbox.t_devtools$toolbox77121 = (function (obj,header,style,tag,meta77122){
+devtools.toolbox.t_devtools$toolbox41324 = (function (obj,header,style,tag,meta41325){
 this.obj = obj;
 this.header = header;
 this.style = style;
 this.tag = tag;
-this.meta77122 = meta77122;
+this.meta41325 = meta41325;
 this.cljs$lang$protocol_mask$partition0$ = 393216;
 this.cljs$lang$protocol_mask$partition1$ = 0;
 })
-devtools.toolbox.t_devtools$toolbox77121.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (_77123,meta77122__$1){
+devtools.toolbox.t_devtools$toolbox41324.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (_41326,meta41325__$1){
 var self__ = this;
-var _77123__$1 = this;
-return (new devtools.toolbox.t_devtools$toolbox77121(self__.obj,self__.header,self__.style,self__.tag,meta77122__$1));
+var _41326__$1 = this;
+return (new devtools.toolbox.t_devtools$toolbox41324(self__.obj,self__.header,self__.style,self__.tag,meta41325__$1));
 });
 
-devtools.toolbox.t_devtools$toolbox77121.prototype.cljs$core$IMeta$_meta$arity$1 = (function (_77123){
+devtools.toolbox.t_devtools$toolbox41324.prototype.cljs$core$IMeta$_meta$arity$1 = (function (_41326){
 var self__ = this;
-var _77123__$1 = this;
-return self__.meta77122;
+var _41326__$1 = this;
+return self__.meta41325;
 });
 
-devtools.toolbox.t_devtools$toolbox77121.prototype.devtools$protocols$IFormat$ = true;
+devtools.toolbox.t_devtools$toolbox41324.prototype.devtools$protocols$IFormat$ = true;
 
-devtools.toolbox.t_devtools$toolbox77121.prototype.devtools$protocols$IFormat$_header$arity$1 = (function (_){
+devtools.toolbox.t_devtools$toolbox41324.prototype.devtools$protocols$IFormat$_header$arity$1 = (function (_){
 var self__ = this;
 var ___$1 = this;
 return devtools.formatters.templating.render_markup.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [self__.tag,self__.style], null),((cljs.core.fn_QMARK_.call(null,self__.header))?self__.header.call(null,self__.obj):self__.header)], null));
 });
 
-devtools.toolbox.t_devtools$toolbox77121.prototype.devtools$protocols$IFormat$_has_body$arity$1 = (function (_){
+devtools.toolbox.t_devtools$toolbox41324.prototype.devtools$protocols$IFormat$_has_body$arity$1 = (function (_){
 var self__ = this;
 var ___$1 = this;
 return true;
 });
 
-devtools.toolbox.t_devtools$toolbox77121.prototype.devtools$protocols$IFormat$_body$arity$1 = (function (_){
+devtools.toolbox.t_devtools$toolbox41324.prototype.devtools$protocols$IFormat$_body$arity$1 = (function (_){
 var self__ = this;
 var ___$1 = this;
 return devtools.formatters.templating.render_markup.call(null,devtools.formatters.markup._LT_body_GT_.call(null,devtools.formatters.markup._LT_standard_body_reference_GT_.call(null,self__.obj)));
 });
 
-devtools.toolbox.t_devtools$toolbox77121.getBasis = (function (){
-return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"obj","obj",-1672671807,null),new cljs.core.Symbol(null,"header","header",1759972661,null),new cljs.core.Symbol(null,"style","style",1143888791,null),new cljs.core.Symbol(null,"tag","tag",350170304,null),new cljs.core.Symbol(null,"meta77122","meta77122",627858706,null)], null);
+devtools.toolbox.t_devtools$toolbox41324.getBasis = (function (){
+return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"obj","obj",-1672671807,null),new cljs.core.Symbol(null,"header","header",1759972661,null),new cljs.core.Symbol(null,"style","style",1143888791,null),new cljs.core.Symbol(null,"tag","tag",350170304,null),new cljs.core.Symbol(null,"meta41325","meta41325",-1284865666,null)], null);
 });
 
-devtools.toolbox.t_devtools$toolbox77121.cljs$lang$type = true;
+devtools.toolbox.t_devtools$toolbox41324.cljs$lang$type = true;
 
-devtools.toolbox.t_devtools$toolbox77121.cljs$lang$ctorStr = "devtools.toolbox/t_devtools$toolbox77121";
+devtools.toolbox.t_devtools$toolbox41324.cljs$lang$ctorStr = "devtools.toolbox/t_devtools$toolbox41324";
 
-devtools.toolbox.t_devtools$toolbox77121.cljs$lang$ctorPrWriter = (function (this__48153__auto__,writer__48154__auto__,opt__48155__auto__){
-return cljs.core._write.call(null,writer__48154__auto__,"devtools.toolbox/t_devtools$toolbox77121");
+devtools.toolbox.t_devtools$toolbox41324.cljs$lang$ctorPrWriter = (function (this__25396__auto__,writer__25397__auto__,opt__25398__auto__){
+return cljs.core._write.call(null,writer__25397__auto__,"devtools.toolbox/t_devtools$toolbox41324");
 });
 
-devtools.toolbox.__GT_t_devtools$toolbox77121 = (function devtools$toolbox$__GT_t_devtools$toolbox77121(obj__$1,header__$1,style__$1,tag__$1,meta77122){
-return (new devtools.toolbox.t_devtools$toolbox77121(obj__$1,header__$1,style__$1,tag__$1,meta77122));
+devtools.toolbox.__GT_t_devtools$toolbox41324 = (function devtools$toolbox$__GT_t_devtools$toolbox41324(obj__$1,header__$1,style__$1,tag__$1,meta41325){
+return (new devtools.toolbox.t_devtools$toolbox41324(obj__$1,header__$1,style__$1,tag__$1,meta41325));
 });
 
 }
 
-return (new devtools.toolbox.t_devtools$toolbox77121(obj,header,style,tag,cljs.core.PersistentArrayMap.EMPTY));
+return (new devtools.toolbox.t_devtools$toolbox41324(obj,header,style,tag,cljs.core.PersistentArrayMap.EMPTY));
 });
 
 devtools.toolbox.envelope.cljs$lang$maxFixedArity = 4;
@@ -153,4 +153,4 @@ devtools.toolbox.force_format = (function devtools$toolbox$force_format(obj){
 return devtools.formatters.templating.render_markup.call(null,devtools.formatters.markup._LT_surrogate_GT_.call(null,obj));
 });
 
-//# sourceMappingURL=toolbox.js.map?rel=1476044196308
+//# sourceMappingURL=toolbox.js.map?rel=1476131807142
