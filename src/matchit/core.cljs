@@ -4,13 +4,14 @@
 
 (enable-console-print!)
 
-(defn ->row
+(defn- ->row
   [row tiles]
-  (map-indexed #(-> %2
-                    (assoc :x %1)
-                    (assoc :y row)) tiles))
+  (map-indexed
+    #(-> %2
+         (assoc :x %1)
+         (assoc :y row)) tiles))
 
-(defn ->id
+(defn- ->id
   [index tile]
   (assoc tile :id index))
 
@@ -28,31 +29,42 @@
          (flatten)
          (map-indexed ->id))))
 
-(defonce app-state (atom {:board (board 4) :width 900 :height 600}))
+(defonce app-state (atom {:board (board 4) :width 900 :height 600 :ms-til-hide 6000}))
+
+(defn- get-tile
+  [id board]
+  (first (filter #(= id (:id %)) board)))
+
+(defn- remove-tile
+  [id board]
+  (remove #(= id (:id %)) board))
+
+(defn- hidden-tiles-by-face
+  [face board]
+  (filter #(and (= (:face %) face)
+                (not (:revealed? %))) board))
 
 (defn reveal
   ([board]
    (map #(assoc % :revealed? true) board))
   ([id board]
-   (let [by-id #(= id (:id %))
-         tile (first (filter by-id board))
-         removed (remove by-id board)]
-     (-> (assoc tile :revealed? true)
+   (let [removed (remove-tile id board)]
+     (-> (get-tile id board)
+         (assoc :revealed? true)
          (cons removed)))))
 
 (defn hide
   [id board]
-  (let [by-id #(= id (:id %))
-        tile (first (filter by-id board))
-        not-revealed-by-face #(and (= (:face tile) (:face %))
-                                   (not (:revealed? %)))
-        removed (remove by-id board)
-        all-revealed? (empty? (filter not-revealed-by-face removed))]
-    (-> (assoc tile :revealed? all-revealed?)
+  (let [{:keys [face] :as tile} (get-tile id board)
+        removed (remove-tile id board)
+        hidden-by-face (hidden-tiles-by-face face removed)
+        all-revealed? (empty? hidden-by-face)]
+    (-> tile
+        (assoc :revealed? all-revealed?)
         (cons removed))))
 
 (defn hidden
-  [app {:keys [x y id disable-click?]}]
+  [{:keys [ms-til-hide] :as app :or {ms-til-hide 6000}} {:keys [x y id]}]
   [:rect
    {:fill "grey"
     :width 0.9
@@ -61,12 +73,10 @@
     :x x
     :y y
     :on-click
-    (if (not disable-click?)
-      (fn hidden-click
-        [e]
-        (swap! app update-in [:board] (partial reveal id))
-        (js/setInterval #(swap! app update-in [:board] (partial hide id)) 6000))
-      #())}])
+    (fn hidden-click
+      [e]
+      (swap! app update-in [:board] (partial reveal id))
+      (js/setInterval #(swap! app update-in [:board] (partial hide id)) ms-til-hide))}])
 
 (defn visible
   [{:keys [x y id image]}]
@@ -90,12 +100,10 @@
   (let [{:keys [height width board]} @app]
     (into
       (view-box width height (inc (:x (apply max-key :x board))) (inc (:y (apply max-key :y board))))
-      (for [tile board]
-        (if (:revealed? tile)
+      (for [{:keys [revealed?] :as tile} board]
+        (if revealed?
           (visible tile)
           (hidden app tile))))))
 
-(reagent/render-component [matchitmon app-state]
-                          (. js/document (getElementById "app")))
-
-(defn on-js-reload [])
+(defonce element (. js/document (getElementById "app")))
+(reagent/render-component [matchitmon app-state] element)
