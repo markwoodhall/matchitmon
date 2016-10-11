@@ -31,18 +31,27 @@
 
 (defonce app-state (atom {:board (board 4) :width 900 :height 600 :ms-til-hide 6000}))
 
+(defn- by-id [x y] (= x (:id y)))
+(defn- by-face [x y] (= x (:face y)))
+
 (defn- get-tile
   [id board]
-  (first (filter #(= id (:id %)) board)))
+  (-> by-id
+      (partial id)
+      (filter board)
+      first))
 
 (defn- remove-tile
   [id board]
-  (remove #(= id (:id %)) board))
+  (-> by-id
+      (partial id)
+      (remove board)))
 
 (defn- hidden-tiles-by-face
   [face board]
-  (filter #(and (= (:face %) face)
-                (not (:revealed? %))) board))
+  (->> board
+       (filter #(not (:revealed? %)))
+       (filter (partial by-face face))))
 
 (defn reveal
   ([board]
