@@ -46,7 +46,7 @@
                 :source-paths ["src"]
                 :figwheel {:devcards true
                            :open-urls ["http://localhost:3449/devcards.html"]}
-                :compiler {:main    "matchit.devcards"
+                :compiler {:main "matchit.devcards"
                            :asset-path "js/compiled/devcards_out"
                            :output-to  "resources/public/js/compiled/matchit_devcards.js"
                            :output-dir "resources/public/js/compiled/devcards_out"
