@@ -13,7 +13,7 @@
                  [devcards "0.2.2"]
                  [reagent "0.6.0"]]
 
-  :plugins [[lein-figwheel "0.5.8"]
+  :plugins [[lein-figwheel "0.5.10"]
             [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
